@@ -2,13 +2,14 @@ import express from 'express';
 import cors from 'cors';
 
 import mongoose from 'mongoose';
+import route from '../server/routes/client';
 
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 9000;
+const port = process.env.PORT || 8000;
 
 const uri = process.env.ATLAS_URI;
 
@@ -19,4 +20,7 @@ connect.once('open', ()=> console.log(`Connection to Mongoose Database establish
 
 app.use(cors());
 app.use(express.json());
-app.listen(port, _=> console.log(`TeleMed App is running on port : ${port}`));
+app.use('/api/v1',route);
+
+
+export default app;
