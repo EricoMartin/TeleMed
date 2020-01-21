@@ -2,25 +2,26 @@ import express from 'express';
 import cors from 'cors';
 
 import mongoose from 'mongoose';
-import route from '../server/routes/client';
+import router from './routes/client';
 
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 5000;
 
 const uri = process.env.ATLAS_URI;
 
-mongoose.connect(uri, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true});
+mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true});
 const connect = mongoose.connection;
 
 connect.once('open', ()=> console.log(`Connection to Mongoose Database established successfully!`));
 
 app.use(cors());
 app.use(express.json());
-app.use('/api/v1',route);
+app.use(express.urlencoded({ extended: false }));
+app.use('/api/v1', router);
 
-
+app.listen(port, () => console.log( `TeleMed App is running on port: ${port}`));
 export default app;

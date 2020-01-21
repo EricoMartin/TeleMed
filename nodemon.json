@@ -1,5 +1,5 @@
 {
     "exec": "npm run start",
-    "watch": ["src/*", "public/*"],
+    "watch": ["backend/*", "server/*"],
     "ext": "js, html, css, json"
   }
