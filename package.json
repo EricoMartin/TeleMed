@@ -8,16 +8,19 @@
     "start:dev": "nodemon babel-node ./server/app.js",
     "build": "npm run clean && mkdir dist && babel server -d dist --copy-files",
     "clean": "rm -rf dist",
-    "test": "jest --detectOpenHandles"
+    "lint": "eslint ./server",
+    "lint-fix": "npm run lint  -- --fix ./server/* ",
+    "test": "jest --detectOpenHandles",
+    "test:watch": "jest --watch"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cloudinary": "^1.18.1",
     "cors": "^2.8.5",
     "coveralls": "^3.0.9",
     "dotenv": "^8.2.0",
-    "eslint": "^6.8.0",
     "express": "^4.17.1",
     "jshint": "^2.11.0",
     "jsonwebtoken": "^8.5.1",
@@ -28,7 +31,14 @@
     "@babel/core": "^7.8.3",
     "@babel/node": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0",
     "jest": "^24.9.0",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "supertest": "^4.0.2"
   }
 }
