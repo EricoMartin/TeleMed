@@ -37,8 +37,13 @@ This is a Full Stack web and Mobile Application that that is intended to take ad
 - Express
 - npm
 - nodemon
-- Jest
-- eslint 
+- Jest 
+- Supertest
+- MongoDB
+- Mongoose
+- dotenv
+- bcryptjs
+- Eslint
 - babel
 - jsonwebtoken
 
