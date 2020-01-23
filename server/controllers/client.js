@@ -11,13 +11,13 @@ const EXPIRES = '12Hrs';
 
 const client = {
 
-  async getAllClients(req, res) {
+  async getAllClients: (req, res) => {
     clientModel.find()
       .then((clients) => res.json(clients))
       .catch(err, res.status(400).json('Error:'`${err}`));
   },
 
-  async createClient(req, res) {
+  async createClient: (req, res) => {
     const {
       email,
       phone,
@@ -90,7 +90,7 @@ const client = {
     }
   },
 
-  async authenticateClient(req, res) {
+  async authenticateClient: (req, res)=>  {
     const { username } = req.body;
     const { password } = req.body;
 
