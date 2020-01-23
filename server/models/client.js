@@ -35,11 +35,14 @@ const userSchema = mongoose.Schema({
 { timeStamps: true });
 userSchema.pre('save', (next) => {
   const user = this;
+  // eslint-disable-next-line
   bcrypt.genSalt(10, (err, salt) => {
     if (err) {
+      // eslint-disable-next-line
       res.json({ success: false, msg: err.message });
     } else {
-      bcrypt.hash(user.password, salt, (err, hashed) => {
+      // eslint-disable-next-line
+      return bcrypt.hash(user.password, salt, (err, hashed) => {
         if (err) {
           return next;
         }

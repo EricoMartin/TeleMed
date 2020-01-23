@@ -1,3 +1,4 @@
+/* eslint-disable */
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
@@ -11,13 +12,13 @@ const EXPIRES = '12Hrs';
 
 const client = {
 
-  async getAllClients: (req, res) => {
+  getAllClients: (req, res) => {
     clientModel.find()
       .then((clients) => res.json(clients))
       .catch(err, res.status(400).json('Error:'`${err}`));
   },
 
-  async createClient: (req, res) => {
+  createClient: (req, res) => {
     const {
       email,
       phone,
@@ -54,7 +55,7 @@ const client = {
     }
 
     try {
-      const emailFound = await clientModel.find(req.body.email);
+      const emailFound = clientModel.find(req.body.email);
       if (emailFound.length) {
         return res.status(HttpStatus.BAD_REQUEST).json({
           status: HttpStatus.BAD_REQUEST,
@@ -90,7 +91,7 @@ const client = {
     }
   },
 
-  async authenticateClient: (req, res)=>  {
+  authenticateClient: (req, res) => {
     const { username } = req.body;
     const { password } = req.body;
 
