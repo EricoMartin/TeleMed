@@ -24,5 +24,5 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use('/api/v1', router);
 
-app.listen(port, () => console.log( `TeleMed App is running on port: ${port}`));
+app.listen(port, () => console.log(`TeleMed App is running on port: ${port}`));
 export default app;
