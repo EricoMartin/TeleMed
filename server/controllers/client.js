@@ -15,16 +15,15 @@ const client = {
   getAllClients: (req, res) => {
     clientModel.find()
       .then((clients) => res.json(clients))
-      .catch(err, res.status(400).json('Error:'`${err}`));
+      .catch(err => res.status(400).json('Error:'`${err}`));
   },
 
-  createClient: (req, res) => {
-    const {
+  createClient: (req, res) => {   const {
       email,
       phone,
       age,
       password,
-      confirmedPassword,
+      confirmPassword,
     } = req.body;
     const userId = Math.floor(Math.random() * 100000) + 1 + Date.now();
     const isAdmin = false;
@@ -35,11 +34,11 @@ const client = {
     } = req.body;
 
     const clientDetails = [username, firstName, lastName, phone, email, age, address, password,
-      confirmedPassword];
+      confirmPassword];
 
-    const invalid = (props, data) => props.find((index) => data[index] === undefined || data[index] === '' || data[index] === null);
+    const valid = (props, data) => props.find((index) => data[index] === undefined || data[index] === '' || data[index] === null);
 
-    if (invalid(clientDetails, req.body)) {
+    if (!valid(clientDetails, req.body)) {
       return res.status(HttpStatus.UNAUTHORIZED).json({
         status: HttpStatus.UNAUTHORIZED,
         message: 'Fill all required fields',
@@ -55,7 +54,8 @@ const client = {
     }
 
     try {
-      const emailFound = clientModel.find(req.body.email);
+      
+      const emailFound = clientModel.findOne(req.body.email);
       if (emailFound.length) {
         return res.status(HttpStatus.BAD_REQUEST).json({
           status: HttpStatus.BAD_REQUEST,
@@ -68,7 +68,17 @@ const client = {
         isAdmin,
         createdAt,
         clientDetails,
+        username, 
+        firstName, 
+        lastName, 
+        phone, 
+        email, 
+        age, 
+        address, 
+        password,
+        confirmPassword
       });
+      console.log(newClient)
       if (!newClient) {
         return res.status(HttpStatus.BAD_REQUEST).json({
           status: HttpStatus.BAD_REQUEST,
@@ -76,12 +86,12 @@ const client = {
         });
       }
       newClient.save().then(() => res.status(HttpStatus.CREATED).json({
-        status: HttpStatus.CREATED,
         username: newClient.username,
         userId: newClient.userId,
         db_id: newClient._id,
         message: 'New User Created!',
-      })).catch((err) => {
+      })
+      ).catch((err) => {
         res.status(HttpStatus.BAD_REQUEST).json({
           success: false,
           err,
@@ -89,6 +99,7 @@ const client = {
         });
       });
     }
+    
   },
 
   authenticateClient: (req, res) => {

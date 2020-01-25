@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 
 const userSchema = mongoose.Schema({
   userId: { type: Number, required: true },
-  username: { type: String, required: true },
+  username: { type: String, required: true, unique: true, trim: true, minLength: 3 },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   role: { type: String, enum: ['patient', 'nurse', 'doctor', 'dentist', 'specialist', 'pharmacist'] },
@@ -32,26 +32,38 @@ const userSchema = mongoose.Schema({
   accountBal: { type: Number, required: false },
 
 },
-{ timeStamps: true });
-userSchema.pre('save', (next) => {
-  const user = this;
+{ timestamps: true });
+userSchema.pre('save', function(next){
+  
+    const user = this;
+    if(user.isNew){
+      let salt = bcrypt.genSaltSync(10);
+      let hashed = bcrypt.hashSync(user.password, salt);
+      user.password = hashed;
+    }
+    next();
+/*
   // eslint-disable-next-line
   bcrypt.genSalt(10, (err, salt) => {
     if (err) {
       // eslint-disable-next-line
       res.json({ success: false, msg: err.message });
+      
     } else {
       // eslint-disable-next-line
-      return bcrypt.hash(user.password, salt, (err, hashed) => {
+       bcrypt.hash(user.password, salt, (err, hashed) => {
+        console.log(user.password)
         if (err) {
-          return next;
+          next(err);
         }
         user.password = hashed;
         next();
       });
     }
-  });
+  })
+*/
 });
+
 const client = mongoose.model('Client', userSchema);
 
 export default client;
