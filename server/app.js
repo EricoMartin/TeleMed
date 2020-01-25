@@ -13,7 +13,7 @@ const port = process.env.PORT || 5000;
 
 const uri = process.env.ATLAS_URI;
 
-mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
+mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true});
 const connect = mongoose.connection;
 
 connect.once('open', () => console.log('Connection to Mongoose Database established successfully!'));
@@ -25,4 +25,5 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/v1', router);
 
 app.listen(port, () => console.log(`TeleMed App is running on port: ${port}`));
+
 export default app;

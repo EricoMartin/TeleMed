@@ -11,5 +11,6 @@ router.get('/', (req, res) => {
 });
 
 router.post('/auth/signup/', newClient.createClient);
+router.get('/clients/', newClient.getAllClients)
 
 export default router;
