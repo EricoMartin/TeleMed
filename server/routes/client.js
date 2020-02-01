@@ -1,7 +1,14 @@
 import { Router } from 'express';
+import cloudinary from 'cloudinary';
 import newClient from '../controllers/client';
-//import upload from '../controllers/upload';
-import multer from 'multer';
+import { upload, dataUri } from '../controllers/upload';
+import httpStatus from '../HttpStatus/index';
+
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET      
+});
 
 const router = Router();
 // TeleMed root route
@@ -14,25 +21,27 @@ router.get('/', (req, res) => {
 
 router.post('/auth/signup/', newClient.createClient);
 router.get('/clients/', newClient.getAllClients);
-const upload = multer({
-  dest: 'images',
-  limits: {
-    fileSize: 1000000
-  },
 
-  fileFilter(req, file, cb){
-    file.originalname.endsWith('.jpg') || file.originalname.endsWith('.jpeg') 
-    || file.originalname.endsWith('.png') ? cb(null, true) : cb(new Error("Invalid File Extension Not Allowed"));
+router.post('/clients/upload', upload, (req, res) =>{
+  if(req.file){
+    const file = dataUri(req).content;
+    return cloudinary.uploader.upload(file) 
+    .then(result => {
+      const img = result.url;
+      return res.status(httpStatus.OK).json({
+        message: 'Image uploaded to cloudinary successfully!',
+        data: {
+          img
+        }
+      })
+    }).catch( err => res.status(httpStatus.BAD_REQUEST).json({
+      message: 'Error uploading image',
+      data: {
+        err
+      }
+    }))
   }
-
-})
-router.post('/clients/upload', upload.single('imgUrl'), (req, res) =>{
-  
-  res.send();
-},
-  (error, req, res, next) =>{
-    res.status(400).send({error: error.message});
-  }
+}
 );
 
 router.post('/auth/signin', newClient.authenticateClient);
