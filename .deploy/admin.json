@@ -1,0 +1,16 @@
+{
+    "admin":[
+        {
+        "address": "No 11, olubode street, Egbeda, Lagos.",
+ 	    "age": "34", 
+ 	    "confirmPassword": "skylineflyvuereactkotlin", 
+	    "phone": "08100058616",
+	    "username": "adminsuperuser",
+         "email": "ericomartin.0785@gmail.com",
+        "role": "admin",
+        "password": "skylineflyvuereactkotlin",
+        "firstName": "Admin ", 
+        "lastName": "Martini"
+        }
+    ]
+}

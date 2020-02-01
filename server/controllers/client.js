@@ -1,15 +1,21 @@
 /* eslint-disable */
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-
 import env from 'dotenv';
+import cloudinary from 'cloudinary';
 
 import clientModel from '../models/client';
 import HttpStatus from '../HttpStatus/index';
 
-env.config();
-const EXPIRES = '12Hrs';
 
+env.config();
+const EXPIRES = '24h';
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET      
+});
+ 
 const client = {
 
   getAllClients: (req, res) => {
@@ -18,7 +24,9 @@ const client = {
       .catch(err => res.status(400).json('Error:'`${err}`));
   },
 
-  createClient: (req, res) => {   const {
+  createClient: (req, res) => {   
+   
+    const {
       email,
       phone,
       age,
@@ -26,13 +34,16 @@ const client = {
       confirmPassword,
     } = req.body;
     const userId = Math.floor(Math.random() * 100000) + 1 + Date.now();
-    const isAdmin = false;
+    
+       const isAdmin = false;
+
+    
     const createdAt = new Date();
 
     const {
       username, firstName, lastName, address,
     } = req.body;
-
+    
     const clientDetails = [username, firstName, lastName, phone, email, age, address, password,
       confirmPassword];
 
@@ -56,18 +67,22 @@ const client = {
     try {
       
       const emailFound = clientModel.findOne(req.body.email);
+      
       if (emailFound.length) {
         return res.status(HttpStatus.BAD_REQUEST).json({
           status: HttpStatus.BAD_REQUEST,
           message: 'User Email already exists',
         });
       }
+      if(req.body.password === process.env.ADMIN_PASS){
+        isAdmin = true;
+      }
+      
     } finally {
       const newClient = new clientModel({
         userId,
         isAdmin,
         createdAt,
-        clientDetails,
         username, 
         firstName, 
         lastName, 
@@ -78,7 +93,12 @@ const client = {
         password,
         confirmPassword
       });
-      console.log(newClient)
+      
+      const token = jwt.sign({newClient: newClient._id}, process.env.JWT_TOKEN, { expiresIn: EXPIRES }); 
+
+      console.log(newClient);
+      console.log(token);
+
       if (!newClient) {
         return res.status(HttpStatus.BAD_REQUEST).json({
           status: HttpStatus.BAD_REQUEST,
@@ -86,6 +106,7 @@ const client = {
         });
       }
       newClient.save().then(() => res.status(HttpStatus.CREATED).json({
+        token,
         username: newClient.username,
         userId: newClient.userId,
         db_id: newClient._id,
