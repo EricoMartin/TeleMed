@@ -2,7 +2,6 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import env from 'dotenv';
-import cloudinary from 'cloudinary';
 
 import clientModel from '../models/client';
 import HttpStatus from '../HttpStatus/index';
@@ -10,11 +9,7 @@ import HttpStatus from '../HttpStatus/index';
 
 env.config();
 const EXPIRES = '24h';
-cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.CLOUD_API_KEY,
-  api_secret: process.env.CLOUD_API_SECRET      
-});
+
  
 const client = {
 
@@ -65,6 +60,10 @@ const client = {
     }
 
     try {
+
+        
+        
+        
       
       const emailFound = clientModel.findOne(req.body.email);
       
@@ -80,6 +79,7 @@ const client = {
       
     } finally {
       const newClient = new clientModel({
+        imgUrl,
         userId,
         isAdmin,
         createdAt,
