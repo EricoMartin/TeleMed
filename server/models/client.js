@@ -8,6 +8,7 @@ const userSchema = mongoose.Schema({
   lastName: { type: String, required: true },
   role: { type: String, enum: ['patient', 'nurse', 'doctor', 'dentist', 'specialist', 'pharmacist'] },
   isAdmin: { type: Boolean, required: true },
+  token:{ type: String, required: false},
   password: { type: String, required: true },
   confirmPassword: { type: String, required: true },
   imgUrl:{ type: String, required:false},

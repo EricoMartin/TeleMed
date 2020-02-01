@@ -1,4 +1,4 @@
-import { Router } from 'express';
+/*
 import env from 'dotenv';
 import multer from 'multer';
 
@@ -18,6 +18,7 @@ const upload = multer({
   }
 
 })
-upload.single('imgUrl');
+
 
 export default upload;
+*/
