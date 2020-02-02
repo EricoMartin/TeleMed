@@ -18,7 +18,13 @@ const connect = mongoose.connection;
 
 connect.once('open', () => console.log('Connection to Mongoose Database established successfully!'));
 
-app.use(cors());
+app.use(cors({
+    allowedHeaders:['sessionId', 'Content-Type', 'master-token'],
+    exposedHeaders: ['sessionId'],
+    origin: '*',
+    methods: 'GET, HEAD, PUT, PATCH, POST, DELETE',
+    preflightContinue: false
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

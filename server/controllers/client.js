@@ -79,7 +79,6 @@ const client = {
       
     } finally {
       const newClient = new clientModel({
-        imgUrl,
         userId,
         isAdmin,
         createdAt,
