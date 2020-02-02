@@ -6,7 +6,7 @@ import HttpStatus from '../HttpStatus/index';
  env.config();
 
  const getToken = (req) =>{
-     const token = req.body.token || req.query.token || req.headers[master-token];
+     const token = req.body.token || req.query.token || req.headers['master-token'];
      return token;
  }
 
@@ -14,7 +14,7 @@ import HttpStatus from '../HttpStatus/index';
      const token = getToken(req);
 
      if(token){
-        jwt.verify(token, config.JWT_TOKEN, (err, decoded) => {
+        jwt.verify(token, process.env.JWT_TOKEN, (err, decrypt) => {
             if(err){
                 return res.json({
                     message: 'Could not resolve token',
