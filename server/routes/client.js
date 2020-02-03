@@ -22,5 +22,7 @@ router.post('/clients/upload', validateToken, upload, cloudUpload);
 
 router.post('/auth/signin', validateToken, newClient.authenticateClient);
 
+router.post('/auth/signout', validateToken, newClient.signOutClient);
+
 
 export default router;
