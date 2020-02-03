@@ -60,11 +60,6 @@ const client = {
     }
 
     try {
-
-        
-        
-        
-      
       const emailFound = clientModel.findOne(req.body.email);
       
       if (emailFound.length) {
@@ -159,6 +154,16 @@ const client = {
       });
     });
   },
+  signOutClient: (req, res) =>{
+    if(req.headers){
+      const header = req.headers;
+    header.delete;
+    return res.json({
+      message: "User logged out"
+    })
+    } 
+    
+  }
 };
 
 export default client;
