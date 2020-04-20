@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import cloudinary from 'cloudinary';
 import env from 'dotenv';
 import multer from 'multer';
@@ -18,7 +17,6 @@ cloudinary.v2.config({
 
  
 const storage = multer.memoryStorage({
-  dest: 'images',
   limits: {
     fileSize: 1000000
   },
@@ -35,22 +33,22 @@ const upload = multer({storage: storage}).single('images');
 const uriD = new Datauri();
 const dataUri = (req) => uriD.format(path.extname(req.file.originalname).toString(), req.file.buffer)
 
-const cloudUpload =  async (req, res) =>{
+const cloudUpload = (req, res) =>{
   if(req.file){
-    const client = new clientModel({
-      token: req.headers.token
-    });
-    client.imgUrl = req.file.path;
-    
-    await client.updateOne(client);
-    const file = dataUri(req).content;
-    return cloudinary.uploader.upload(file) 
-    .then((result) => {
-      const img = result.url;
-      return res.status(httpStatus.OK).json({
+        const file = dataUri(req).content;
+     cloudinary.uploader.upload(file, {eager: [
+      {width: 150, height: 150, gravity: "face", crop: "crop"}
+     ]}) 
+    .then( async (result) => {   
+        const data ={
+          imgUrl: result.secure_url,
+          publicId: result.public_id
+        }
+        await clientModel.findByIdAndUpdate({ '_id': req.params.id}, {$set: data}, { new: true });
+        res.status(httpStatus.OK).json({
         message: 'Image uploaded to cloudinary successfully!',
         data: {
-          img
+          result
         }
       })
     }).catch( err => res.status(httpStatus.BAD_REQUEST).json({
@@ -60,9 +58,20 @@ const cloudUpload =  async (req, res) =>{
       }
     }))
   }
+  
+}
+const display = (req, res) => {
+    
+console.log(req.params)
+  clientModel.findOne( {imgUrl: req.params.imgUrl}, function (err, posts) {
+      if(err) res.send(err);
+
+      res.status(httpStatus.OK).json({posts: posts});
+  });
 }
 
 export  {
+  display,
   upload,
   cloudUpload
 };
