@@ -11,7 +11,8 @@ const userSchema = mongoose.Schema({
   token:{ type: String, required: false},
   password: { type: String, required: true },
   confirmPassword: { type: String, required: true },
-  imgUrl:{ type: String, required:false},
+  imgUrl:{ type: String, default: ''},
+  publicId:{ type: String, default: ''},
   nhis_ID: { type: Number, required: false },
   email: { type: String, required: true },
   createdAt: { type: Date, required: true },
@@ -32,7 +33,7 @@ const userSchema = mongoose.Schema({
   Current_Treatment: { type: String, required: false },
   accountType: { type: String, required: false },
   accountBal: { type: Number, required: false },
-
+  hospital:  [{type: mongoose.Schema.Types.ObjectId, ref: 'hospital'}]
 },
 { timestamps: true });
 userSchema.pre('save', function(next){

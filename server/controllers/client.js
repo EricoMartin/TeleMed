@@ -5,6 +5,7 @@ import env from 'dotenv';
 
 import clientModel from '../models/client';
 import HttpStatus from '../HttpStatus/index';
+import { welcomeMail } from '../controllers/sendmail';
 
 
 env.config();
@@ -33,7 +34,7 @@ const client = {
        const isAdmin = false;
 
     
-    const createdAt = new Date();
+    const createdAt = new Date().toLocaleString();
 
     const {
       username, firstName, lastName, address,
@@ -99,6 +100,7 @@ const client = {
           message: 'User Email already exists',
         });
       }
+      welcomeMail(newClient.email, newClient.firstName);
       newClient.save().then(() => res.status(HttpStatus.CREATED).json({
         token,
         username: newClient.username,
@@ -113,15 +115,16 @@ const client = {
           message: 'User Not Created!',
         });
       });
+      
     }
     
   },
 
   authenticateClient: (req, res) => {
-    const { username } = req.body;
+    const { email} = req.body;
     const { password } = req.body;
 
-    clientModel.findOne({ username }).then((newClient, err) => {
+    clientModel.findOne({ email }).then((newClient, err) => {
       if (err) {
         return res.status(HttpStatus.BAD_REQUEST)
           .json({
@@ -137,7 +140,7 @@ const client = {
       }
       bcrypt.compare(password, newClient.password, (err, result) => {
         if (result === true) {
-          const payload = { newClient: newClient._id };
+          const payload = { newClient };
           const token = jwt.sign(payload, process.env.JWT_TOKEN, { expiresIn: EXPIRES });
           newClient.password = undefined;
           return res.status(HttpStatus.OK).json({
@@ -154,6 +157,67 @@ const client = {
       });
     });
   },
+  updateClient: async(req, res) =>{
+    const { email, imgUrl} = req.body;
+
+    await clientModel.updateOne({ email: req.params.email}, {$set: imgUrl}, { new: true });
+    await clientModel.findOne({ email }).then((newClient, err) => {
+      if (err) {
+        return res.status(HttpStatus.BAD_REQUEST)
+          .json({
+            status: HttpStatus.BAD_REQUEST,
+            message: err,
+          });
+      }
+      if (!newClient) {
+        return res.status(HttpStatus.NOT_FOUND).json({
+          status: HttpStatus.NOT_FOUND,
+          message: 'User Non Existent!',
+        });
+      }
+      bcrypt.compare(email, newClient.email, (err, result) => {
+        if (result === true) {
+          const payload = { newClient };
+          const token = jwt.sign(payload, process.env.JWT_TOKEN, { expiresIn: EXPIRES });
+          newClient.password = undefined;
+          return res.status(HttpStatus.OK).json({
+            status: HttpStatus.OK,
+            newClient,
+            token,
+            message: 'Client Authenticated!',
+          });
+        }
+        return res.status(HttpStatus.NOT_ACCEPTIBLE).json({
+          status: HttpStatus.NOT_ACCEPTIBLE,
+          error: 'Password did not match!',
+        });
+      });
+    });
+  },
+  getClient: (req, res) =>{
+    const { userId} = req.body;
+
+    clientModel.findOne({ userId }).then((newClient, err) => {
+      if (err) {
+        return res.status(HttpStatus.BAD_REQUEST)
+          .json({
+            status: HttpStatus.BAD_REQUEST,
+            message: err,
+          });
+      }
+      if (!newClient) {
+        return res.status(HttpStatus.NOT_FOUND).json({
+          status: HttpStatus.NOT_FOUND,
+          message: 'User Non Existent!',
+        });
+      }
+      return res.status(HttpStatus.OK).json({
+        status: HttpStatus.OK,
+        newClient,
+        message: 'Client Found!',
+      });
+    })
+  },
   signOutClient: (req, res) =>{
     if(req.headers){
       const header = req.headers;
@@ -163,6 +227,14 @@ const client = {
     })
     } 
     
+  },
+  deleteClient: async (req, res) => {
+    const { username } = req.body;
+
+    await clientModel.deleteOne(username);
+    return res.json({
+      message: "User deleted"
+    })
   }
 };
 

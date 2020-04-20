@@ -13,7 +13,7 @@ const port = process.env.PORT || 5000;
 
 const uri = process.env.ATLAS_URI;
 
-mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true});
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
 const connect = mongoose.connection;
 
 connect.once('open', () => console.log('Connection to Mongoose Database established successfully!'));
