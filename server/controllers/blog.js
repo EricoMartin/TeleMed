@@ -9,7 +9,7 @@ const blogPost ={
       .catch(err => res.status(400).json('Error:'`${err}`));
   },
     getAPost: async (req, res) => {
-        await blogModel.findById(req.params.id).populate('client')
+        await blogModel.findById(req.params.id)
         .then((doc) => res.json(doc))
         .catch(err => res.status(400).json('Error:'`${err}`));
     },
