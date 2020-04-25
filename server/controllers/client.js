@@ -1,11 +1,11 @@
 /* eslint-disable */
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
-import env from 'dotenv';
+const jwt = require( 'jsonwebtoken');
+const bcrypt = require( 'bcryptjs');
+const env = require( 'dotenv');
 
-import clientModel from '../models/client';
-import HttpStatus from '../HttpStatus/index';
-import { welcomeMail } from '../controllers/sendmail';
+const clientModel = require( '../models/client');
+const HttpStatus = require( '../HttpStatus/index');
+const { welcomeMail } = require( '../controllers/sendmail');
 
 
 env.config();
@@ -238,4 +238,4 @@ const client = {
   }
 };
 
-export default client;
+module.exports= client;

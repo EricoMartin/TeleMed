@@ -1,5 +1,5 @@
-import VeterinaryModel from '../models/laboratory';
-import HttpStatus from '../HttpStatus/index';
+const VeterinaryModel = require('../models/laboratory');
+const HttpStatus = require('../HttpStatus/index');
 
 const Veterinary = {
     createVeterinary: async (req, res) => {
@@ -88,4 +88,4 @@ const Veterinary = {
         .catch(err => res.status(HttpStatus.NOT_FOUND).json('Error:'`${err}`))
     }
 };
-export default Veterinary;
+module.exports= Veterinary;

@@ -1,5 +1,4 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
+const mongoose = require('mongoose');
 
 const appointSchema = mongoose.Schema({
     clientName : {type: mongoose.Schema.Types.String, ref: 'client'},
@@ -30,4 +29,4 @@ const appointSchema = mongoose.Schema({
 
   const appoint = mongoose.model('appoint', appointSchema);
 
-  export default appoint;
+  module.exports= appoint;

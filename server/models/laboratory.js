@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const laboratorySchema = mongoose.Schema({
     name : {type: String},
@@ -18,4 +18,4 @@ const laboratorySchema = mongoose.Schema({
 
   const laboratory = mongoose.model('laboratory', laboratorySchema);
 
-  export default laboratory;
+  module.exports= laboratory;

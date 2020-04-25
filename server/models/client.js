@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const userSchema = mongoose.Schema({
   userId: { type: Number, required: true },
@@ -69,4 +69,4 @@ userSchema.pre('save', function(next){
 
 const client = mongoose.model('Client', userSchema);
 
-export default client;
+module.exports=client;

@@ -1,9 +1,9 @@
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
-import env from 'dotenv';
+const jwt = require( 'jsonwebtoken');
+const bcrypt = require( 'bcryptjs');
+const env = require( 'dotenv');
 
-import doctorModel from '../models/doctor';
-import HttpStatus from '../HttpStatus/index';
+const doctorModel = require( '../models/doctor');
+const HttpStatus = require( '../HttpStatus/index');
 
 env.config();
 const EXPIRES = '48h';
@@ -166,4 +166,4 @@ const doctor ={
         .catch(err => res.status(HttpStatus.NOT_FOUND).json('Error:'`${err}`))
     }
 };
-export default doctor;
+module.exports= doctor;

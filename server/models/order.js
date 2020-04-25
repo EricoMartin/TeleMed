@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const orderSchema = mongoose.Schema({
     orderName : {type: mongoose.Schema.Types.String, ref: 'product'},
@@ -18,4 +18,4 @@ const orderSchema = mongoose.Schema({
 
   const order = mongoose.model('order', orderSchema);
 
-  export default order;
+  module.exports= order;

@@ -1,9 +1,9 @@
-import express from 'express';
-import cors from 'cors';
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
+const express =  require('express');
+const cors = require('cors');
+const mongoose =  require('mongoose');
+const dotenv =  require('dotenv');
 
-import router from './routes/client';
+const router =  require('./routes/client');
 
 
 dotenv.config();
@@ -32,4 +32,4 @@ app.use('/api/v1', router);
 
 app.listen(port, () => console.log(`TeleMed App is running on port: ${port}`));
 
-export default app;
+module.exports= app;
