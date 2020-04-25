@@ -1,4 +1,4 @@
-const PharmacyModel = require( '../models/Pharmacy');
+const PharmacyModel = require( '../models/pharmacy');
 const HttpStatus = require( '../HttpStatus/index');
 
 const pharmacy = {
