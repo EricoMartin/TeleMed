@@ -9,7 +9,7 @@ const veterinarySchema = mongoose.Schema({
     email: {type: String},
     website: {type: String},
     regNumber: {type: Number},
-    workingHours: {open: 0800, close: 1200 },
+    workingHours: {type: Date},
     veterinaryClients: [{type: mongoose.Schema.Types.ObjectId, ref: 'client'}],
 },
 {
