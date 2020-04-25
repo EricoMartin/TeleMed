@@ -10,7 +10,7 @@ const appointSchema = mongoose.Schema({
     address: {type: String},
     email: {type: String},
     regNumber: {type: Number},
-    appointTime: {open: 0800, close: 1200 },
+    appointTime: {type: Date },
     prevAppointments: {type: Number},
     consultFee: {type: Number},
     paidFee: { type: Boolean, default: false},
