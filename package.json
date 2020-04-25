@@ -17,6 +17,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/node": "^7.8.7",
+    "@babel/preset-env": "^7.9.5",
     "@sendgrid/mail": "^6.5.1",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.18.1",
@@ -32,10 +36,6 @@
     "multer-storage-cloudinary": "^2.2.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.3",
-    "@babel/core": "^7.8.3",
-    "@babel/node": "^7.8.3",
-    "@babel/preset-env": "^7.8.3",
     "babel-eslint": "^10.0.3",
     "eslint": "^6.1.0",
     "eslint-config-airbnb": "^18.0.1",
