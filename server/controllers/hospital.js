@@ -1,9 +1,11 @@
+
 import hospitalModel from '../models/hospital';
 import HttpStatus from '../HttpStatus/index';
 
+
 const hospital = {
     createHospital: async (req, res) => {
-        const newHospital ={
+        const newHospital = new hospitalModel({
         name : req.body.name,
         phone: req.body.phone,
         address: req.body.address,
@@ -14,7 +16,7 @@ const hospital = {
         specialization: req.body.specialization,
         services: req.body.services,
         ambulances: req.body.ambulances
-    }
+    })
     if(!newHospital.name|| !newHospital.email){
         return res.status(HttpStatus.BAD_REQUEST).json({
             status: HttpStatus.BAD_REQUEST,
@@ -28,7 +30,6 @@ const hospital = {
           });
     }
     await newHospital.save().then(() => res.status(HttpStatus.CREATED).json({
-        token,
         name: newHospital.name,
         db_id: newHospital._id,
         message: 'New Hospital Created!',

@@ -6,8 +6,10 @@ const hospitalSchema = mongoose.Schema({
     phone: {type: Number},
     address: {type: String},
     email: {type: String},
+    website: {type: String},
     regNumber: {type: Number, required: true},
     workingHours: {type: Date},
+    imgUrl: {type: String},
     regFee: {type: Number},
     specialization: {
         type: [String]

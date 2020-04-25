@@ -4,7 +4,15 @@ import newDoctor from '../controllers/doctor';
 import newHospital from '../controllers/hospital';
 import newState from '../controllers/states';
 import newPost from '../controllers/blog';
+import newEmergency from '../controllers/emergency';
+import newPharmacy from '../controllers/pharmacy';
+import newLab from '../controllers/laboratory';
+import newVet from '../controllers/veterinary';
 import { upload, cloudUpload}  from '../controllers/upload';
+import { uploader, cloudUploader}  from '../controllers/docUpload';
+import { uploaded, cloudUploaded} from '../controllers/hosUploads';
+
+
 import validateToken from '../middlewares/validateToken';
 
 
@@ -22,7 +30,7 @@ router.get('/clients/', validateToken, newClient.getAllClients);
 router.get('/client/:id', newClient.getClient)
 router.post('/auth/signin',  newClient.authenticateClient);
 router.post('/auth/signout', newClient.signOutClient);
-// upload image to cloudinary
+// upload clients image to cloudinary
 router.post('/clients/upload/:id', upload, cloudUpload);
 router.post('/client/update', newClient.updateClient);
 
@@ -33,14 +41,19 @@ router.post('/auth/doc/signup', newDoctor.createNewDoctor);
 router.post('/auth/doc/signin', newDoctor.authenticateDoctor);
 router.put('/doc/update/:id', newDoctor.updateDoctor);
 router.delete('/doc/:id', newDoctor.deleteDoctor);
+// upload doctors image to cloudinary
+router.post('/doc/upload/:id', uploader, cloudUploader);
+router.post('/doc/updater', newDoctor.updateDoctor);
 
 //Hospitals
 router.get('/hosp/', newHospital.getAllHospitals);
 router.get('/hosp/:id', newHospital.getAHospital);
-router.post('/hosp/signup', newHospital.createHospital);
+router.post('/hosp/signup',  newHospital.createHospital);
 router.post('/hosp/signin', newHospital.hospitalLogin);
 router.post('/hosp/update/:id', newHospital.updateHospital);
 router.delete('/hosp/delete/:id', newHospital.deleteHospital);
+// upload doctors image to cloudinary
+router.post('/hosp/upload/:id', uploaded, cloudUploaded);
 
 //States
 router.get('/state', newState.getAllStates);
@@ -53,6 +66,32 @@ router.get('/post/', newPost.getAllPosts);
 router.get('/posts/:id', newPost.getAPost);
 router.post('/posts/new', newPost.createPost);
 router.post('/posts/update/:id', newPost.updatePost);
-router.delete('/posts/dele/:id', newPost.deletePost);
+router.delete('/posts/delete/:id', newPost.deletePost);
+
+//Emergency
+router.get('/urgent/', newEmergency.getAllEmergencies);
+router.post('/urgent/new', newEmergency.createEmergency);
+router.delete('/urgent/delete/:id', newEmergency.deleteEmergencies);
+
+//Pharmacy
+router.get('/pharm/', newPharmacy.getAllPharmacys);
+router.get('/pharm/:id', newPharmacy.getAPharmacy);
+router.post('/pharm/new', newPharmacy.createPharmacy);
+router.post('/pharm/update/:id', newPharmacy.updatePharmacy);
+router.delete('/pharm/delete/:id', newPharmacy.deletePharmacy);
+
+//Labs
+router.get('/lab/', newLab.getAllLaboratoriess);
+router.get('/lab/:id', newLab.getALaboratories);
+router.post('/lab/new', newLab.createLaboratories);
+router.post('/lab/update/:id', newLab.updateLaboratories);
+router.delete('/lab/delete/:id', newLab.deleteLaboratories);
+
+//Vet
+router.get('/vet/', newVet.getAllVeterinarys);
+router.get('/vet/:id', newVet.getAVeterinary);
+router.post('/vet/new', newVet.createVeterinary);
+router.post('/vet/update/:id', newVet.updateVeterinary);
+router.delete('/vet/delete/:id', newVet.deleteVeterinary);
 
 export default router;
