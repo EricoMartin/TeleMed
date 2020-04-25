@@ -1,4 +1,4 @@
-const router = express.Router();
+const { Router } = require('express');
 const newClient = require('../controllers/client');
 const newDoctor = require('../controllers/doctor');
 const newHospital = require('../controllers/hospital');
@@ -16,6 +16,7 @@ const { uploaded, cloudUploaded} = require('../controllers/hosUploads');
 const validateToken = require('../middlewares/validateToken');
 
 
+const router = Router();
 // TeleMed root route
 router.get('/', (req, res) => {
   res.send({
@@ -93,4 +94,4 @@ router.post('/vet/new', newVet.createVeterinary);
 router.post('/vet/update/:id', newVet.updateVeterinary);
 router.delete('/vet/delete/:id', newVet.deleteVeterinary);
 
-module.exports = router;
+module.exports= router;
