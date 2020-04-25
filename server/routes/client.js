@@ -1,4 +1,4 @@
-const{ Router } = require('express');
+import { Router } from 'express';
 const newClient = require('../controllers/client');
 const newDoctor = require('../controllers/doctor');
 const newHospital = require('../controllers/hospital');
@@ -94,4 +94,4 @@ router.post('/vet/new', newVet.createVeterinary);
 router.post('/vet/update/:id', newVet.updateVeterinary);
 router.delete('/vet/delete/:id', newVet.deleteVeterinary);
 
-module.exports= router;
+module.exports = router;
