@@ -1,5 +1,4 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
+const mongoose = require('mongoose');
 
 const hospitalSchema = mongoose.Schema({
     name : {type: String},
@@ -27,4 +26,4 @@ const hospitalSchema = mongoose.Schema({
 
   const hospital = mongoose.model('Hospital', hospitalSchema);
 
-  export default hospital;
+  module.exports= hospital;

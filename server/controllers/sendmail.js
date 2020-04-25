@@ -1,5 +1,5 @@
-import sgMail from '@sendgrid/mail';
-import env from 'dotenv';
+const sgMail = require('@sendgrid/mail');
+const env = require('dotenv');
 
 env.config();
 

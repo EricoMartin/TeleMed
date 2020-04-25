@@ -1,10 +1,10 @@
-import cloudinary from 'cloudinary';
-import env from 'dotenv';
-import multer from 'multer';
-import Datauri from 'datauri';
-import path from 'path';
-import httpStatus from '../HttpStatus/index';
-import clientModel from '../models/client';
+const cloudinary =  require('cloudinary');
+const env =  require('dotenv');
+const multer =  require('multer');
+const Datauri =  require('datauri');
+const path =  require('path');
+const httpStatus =  require('../HttpStatus/index');
+const clientModel =  require('../models/client');
 
 
 env.config(); 
@@ -70,7 +70,7 @@ console.log(req.params)
   });
 }
 
-export  {
+module.exports=  {
   display,
   upload,
   cloudUpload

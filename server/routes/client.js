@@ -1,19 +1,19 @@
-import { Router } from 'express';
-import newClient from '../controllers/client';
-import newDoctor from '../controllers/doctor';
-import newHospital from '../controllers/hospital';
-import newState from '../controllers/states';
-import newPost from '../controllers/blog';
-import newEmergency from '../controllers/emergency';
-import newPharmacy from '../controllers/pharmacy';
-import newLab from '../controllers/laboratory';
-import newVet from '../controllers/veterinary';
-import { upload, cloudUpload}  from '../controllers/upload';
-import { uploader, cloudUploader}  from '../controllers/docUpload';
-import { uploaded, cloudUploaded} from '../controllers/hosUploads';
+const{ Router } = require('express');
+const newClient = require('../controllers/client');
+const newDoctor = require('../controllers/doctor');
+const newHospital = require('../controllers/hospital');
+const newState = require('../controllers/states');
+const newPost = require('../controllers/blog');
+const newEmergency = require('../controllers/emergency');
+const newPharmacy = require('../controllers/pharmacy');
+const newLab = require('../controllers/laboratory');
+const newVet = require('../controllers/veterinary');
+const { upload, cloudUpload}  = require('../controllers/upload');
+const { uploader, cloudUploader}  = require('../controllers/docUpload');
+const { uploaded, cloudUploaded} = require('../controllers/hosUploads');
 
 
-import validateToken from '../middlewares/validateToken';
+const validateToken = require('../middlewares/validateToken');
 
 
 const router = Router();
@@ -94,4 +94,4 @@ router.post('/vet/new', newVet.createVeterinary);
 router.post('/vet/update/:id', newVet.updateVeterinary);
 router.delete('/vet/delete/:id', newVet.deleteVeterinary);
 
-export default router;
+module.exports= router;

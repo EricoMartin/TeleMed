@@ -1,5 +1,4 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
+const mongoose = require('mongoose');
 
 const medicSchema = mongoose.Schema({
     medicName : {type: mongoose.Schema.Types.String, ref: 'client'},
@@ -19,4 +18,4 @@ const medicSchema = mongoose.Schema({
 
   const medic = mongoose.model('medic', medicSchema);
 
-  export default medic;
+  module.exports= medic;

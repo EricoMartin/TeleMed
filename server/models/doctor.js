@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const doctorSchema = mongoose.Schema({
     firstName : {type: String, required: true },
@@ -37,4 +37,4 @@ const doctorSchema = mongoose.Schema({
     });
   const doctor = mongoose.model('Doctor', doctorSchema);
 
-  export default doctor;
+  module.exports= doctor;

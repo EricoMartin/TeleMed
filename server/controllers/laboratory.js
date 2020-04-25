@@ -1,5 +1,5 @@
-import LaboratoriesModel from '../models/laboratory';
-import HttpStatus from '../HttpStatus/index';
+const LaboratoriesModel = require( '../models/laboratory');
+const HttpStatus = require( '../HttpStatus/index');
 
 const Laboratories = {
     createLaboratories: async (req, res) => {
@@ -87,4 +87,4 @@ const Laboratories = {
         .catch(err => res.status(HttpStatus.NOT_FOUND).json('Error:'`${err}`))
     }
 };
-export default Laboratories;
+module.exports= Laboratories;

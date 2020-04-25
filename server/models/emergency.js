@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const emergencySchema = mongoose.Schema({
     emergencyType: {type: String, default: 'pregnancy'},
@@ -15,4 +15,4 @@ const emergencySchema = mongoose.Schema({
 
 const emergency = mongoose.model( 'emergency', emergencySchema)
 
-export default emergency;
+module.exports= emergency;

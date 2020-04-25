@@ -1,9 +1,9 @@
 // eslint-disable-next-line
-import jest from 'jest';
-import supertest from 'supertest';
-import mongoose from 'mongoose';
-import server from '../app';
-import  client from '../models/client'
+const jest = require( 'jest');
+const supertest = require( 'supertest');
+//const mongoose = require( 'mongoose');
+const server = require( '../app');
+const  client = require( '../models/client');
 
 const request = supertest(server);
 const signupUrl = 'auth/signup';

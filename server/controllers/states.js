@@ -1,7 +1,7 @@
-import env from 'dotenv';
+const env = require('dotenv');
 
-import stateModel from '../models/states';
-import HttpStatus from '../HttpStatus/index';
+const stateModel = require('../models/states');
+const HttpStatus = require('../HttpStatus/index');
 
 const states = {
 
@@ -95,4 +95,4 @@ const states = {
       }
 
 }
-export default states;
+module.exports = states;

@@ -1,5 +1,5 @@
-import PharmacyModel from '../models/Pharmacy';
-import HttpStatus from '../HttpStatus/index';
+const PharmacyModel = require( '../models/Pharmacy');
+const HttpStatus = require( '../HttpStatus/index');
 
 const pharmacy = {
     createPharmacy: async (req, res) => {
@@ -85,4 +85,4 @@ const pharmacy = {
         .catch(err => res.status(HttpStatus.NOT_FOUND).json('Error:'`${err}`))
     }
 };
-export default pharmacy;
+module.exports= pharmacy;

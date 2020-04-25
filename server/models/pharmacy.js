@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const pharmacySchema = mongoose.Schema({
     name : {type: String},
@@ -17,4 +17,4 @@ const pharmacySchema = mongoose.Schema({
 
   const pharmacy = mongoose.model('pharmacy', pharmacySchema);
 
-  export default pharmacy;
+  module.exports= pharmacy;

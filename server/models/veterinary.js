@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose') ;
 
 const veterinarySchema = mongoose.Schema({
     name : {type: String},
@@ -18,4 +18,4 @@ const veterinarySchema = mongoose.Schema({
 
   const veterinary = mongoose.model('veterinary', veterinarySchema);
 
-  export default veterinary;
+  module.exports= veterinary;

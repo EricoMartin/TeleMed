@@ -1,7 +1,7 @@
-import jwt from 'jsonwebtoken';
-import env from 'dotenv';
+const jwt = require('jsonwebtoken');
+const env = require('dotenv');
 
-import HttpStatus from '../HttpStatus/index';
+const HttpStatus = require('../HttpStatus/index');
 
  env.config();
 
@@ -34,4 +34,4 @@ import HttpStatus from '../HttpStatus/index';
      }
  }
 
- export default validToken;
+ module.exports= validToken;

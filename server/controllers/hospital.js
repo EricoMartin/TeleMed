@@ -1,6 +1,6 @@
 
-import hospitalModel from '../models/hospital';
-import HttpStatus from '../HttpStatus/index';
+const hospitalModel = require('../models/hospital');
+const HttpStatus = require( '../HttpStatus/index');
 
 
 const hospital = {
@@ -89,4 +89,4 @@ const hospital = {
         .catch(err => res.status(HttpStatus.NOT_FOUND).json('Error:'`${err}`))
     }
 };
-export default hospital;
+module.exports= hospital;

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const blogSchema = mongoose.Schema({
     title: {type: String, required: true, unique: true},
@@ -15,4 +15,4 @@ const blogSchema = mongoose.Schema({
 
 const Blog = mongoose.model('Blog', blogSchema);
 
-export default Blog;
+module.exports=Blog;

@@ -1,5 +1,5 @@
-import blogModel from '../models/blog';
-import HttpStatus from '../HttpStatus/index';
+const blogModel = require( '../models/blog');
+const HttpStatus = require( '../HttpStatus/index');
 
 
 const blogPost ={
@@ -65,4 +65,4 @@ const blogPost ={
 
 }
 
-export default blogPost;
+module.exports= blogPost;

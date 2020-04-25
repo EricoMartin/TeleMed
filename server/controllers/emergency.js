@@ -1,5 +1,5 @@
-import EmergencyModel from '../models/emergency';
-import HttpStatus from '../HttpStatus/index';
+const EmergencyModel = require( '../models/emergency');
+const HttpStatus = require( '../HttpStatus/index');
 
 const Emergency = {
     createEmergency:  async (req, res) => {
@@ -52,4 +52,4 @@ const Emergency = {
         .catch(err => res.status(HttpStatus.NOT_FOUND).json('Error:'`${err}`))
     }
 }
-export default Emergency;
+module.exports= Emergency;
