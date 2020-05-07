@@ -15,7 +15,9 @@ const hospital = {
         regFee: req.body.regFee,
         specialization: req.body.specialization,
         services: req.body.services,
-        ambulances: req.body.ambulances
+        ambulances: req.body.ambulances,
+        hospitalClients: req.body.hospitalClients,
+        hospitalDoctors: req.body.hospitalDoctors
     })
     if(!newHospital.name|| !newHospital.email){
         return res.status(HttpStatus.BAD_REQUEST).json({
@@ -45,7 +47,7 @@ const hospital = {
     hospitalLogin: (req, res) =>{
         hospitalModel.findOne(req.body.email)
         .then((hosp) =>{
-            if(hosp.regNumber === hospitalModel.regNumber){
+            if(hosp.regNumber === req.body.regNumber){
                 res.status(HttpStatus.OK).json(hosp);
             }
         })

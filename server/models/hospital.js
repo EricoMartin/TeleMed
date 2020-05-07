@@ -8,7 +8,7 @@ const hospitalSchema = mongoose.Schema({
     website: {type: String},
     regNumber: {type: Number, required: true},
     workingHours: {type: Date},
-    imgUrl: {type: String},
+    imgUrl: {type: String, default: ''},
     regFee: {type: Number},
     specialization: {
         type: [String]

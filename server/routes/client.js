@@ -18,7 +18,7 @@ const validateToken = require('../middlewares/validateToken');
 
 const router = express.Router();
 // TeleMed root route
-router.get('/', (req, res) => {
+router.get('/api/v1', (req, res) => {
   res.send({
     status: 'Successfull',
     data: 'Welcome to TeleMed App API',

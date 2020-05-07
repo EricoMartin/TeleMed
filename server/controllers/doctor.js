@@ -15,13 +15,13 @@ const doctor ={
       .catch(err => res.status(400).json('Error:'`${err}`));
   },
     getADoctor: async (req, res) => {
-        await doctorModel.findById(req.params.id).populate('client')
+        await doctorModel.findById(req.params.id)
         .then((doc) => res.json(doc))
         .catch(err => res.status(400).json('Error:'`${err}`));
     },
     createNewDoctor: async (req, res) => {
-        const {firstName, lastName, password, confirmPassword, phone, email, regID} = req.body;
-        const details = [firstName, lastName, phone, email, regID, password, confirmPassword];
+        const {firstName, lastName, password, confirmPassword, phone, email, regID, hospital, hospitalAddress, consultFee, specialization} = req.body;
+        const details = [firstName, lastName, phone, email, regID, password, confirmPassword,  hospital, hospitalAddress, consultFee, specialization];
       
           const valid = (props, data) => props.find((index) => data[index] === undefined || data[index] === '' || data[index] === null);
           if (!valid(details, req.body)) {
@@ -49,7 +49,7 @@ const doctor ={
             }
         }finally{
             const newDoc = new doctorModel({
-                firstName, lastName, password, confirmPassword, phone, email, regID, 
+                firstName, lastName, password, confirmPassword, phone, email, regID, hospital, hospitalAddress, consultFee, specialization
                 
             });
             const token = jwt.sign({newDoc: newDoc._id}, process.env.JWT_TOKEN, { expiresIn: EXPIRES }); 
