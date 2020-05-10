@@ -1,37 +1,53 @@
+const jwt = require( 'jsonwebtoken');
+const bcrypt = require( 'bcryptjs');
+const env = require( 'dotenv');
 
 const hospitalModel = require('../models/hospital');
 const HttpStatus = require( '../HttpStatus/index');
 
+env.config();
+const EXPIRES = '48h';
 
 const hospital = {
     createHospital: async (req, res) => {
-        const newHospital = new hospitalModel({
-        name : req.body.name,
-        phone: req.body.phone,
-        address: req.body.address,
-        email: req.body.email,
-        regNumber: req.body.regNumber,
-        workingHours: req.body.workingHours,
-        regFee: req.body.regFee,
-        specialization: req.body.specialization,
-        services: req.body.services,
-        ambulances: req.body.ambulances,
-        hospitalClients: req.body.hospitalClients,
-        hospitalDoctors: req.body.hospitalDoctors
-    })
-    if(!newHospital.name|| !newHospital.email){
+      const {name, email, regNumber} = req.body;
+        
+    if(!name.length || !email.length){
         return res.status(HttpStatus.BAD_REQUEST).json({
             status: HttpStatus.BAD_REQUEST,
             message: 'Please state Hospital Name and Email',
           });
     }
-    if(!newHospital.regNumber){
+    if(!regNumber){
         return res.status(HttpStatus.BAD_REQUEST).json({
             status: HttpStatus.BAD_REQUEST,
             message: 'Please state Hospital Registration Number and retry',
           });
     }
+    const newHospital = new hospitalModel({
+      name : req.body.name,
+      password: req.body.password,
+      confirmPassword: req.body.confirmPassword,
+      phone: req.body.phone,
+      address: req.body.address,
+      email: req.body.email,
+      website: req.body.website,
+      regNumber: req.body.regNumber,
+      workingHours: req.body.workingHours,
+      regFee: req.body.regFee,
+      specialization: req.body.specialization,
+      services: req.body.services,
+      ambulances: req.body.ambulances
+  })
+  const token = jwt.sign({newHospital: newHospital._id}, process.env.JWT_TOKEN, { expiresIn: EXPIRES });
+  if (!newHospital) {
+    return res.status(HttpStatus.BAD_REQUEST).json({
+      status: HttpStatus.BAD_REQUEST,
+      message: 'Hospital already exists',
+    });
+  }
     await newHospital.save().then(() => res.status(HttpStatus.CREATED).json({
+        token,
         name: newHospital.name,
         db_id: newHospital._id,
         message: 'New Hospital Created!',
@@ -45,13 +61,56 @@ const hospital = {
       });
     }, 
     hospitalLogin: (req, res) =>{
-        hospitalModel.findOne(req.body.email)
-        .then((hosp) =>{
-            if(hosp.regNumber === req.body.regNumber){
-                res.status(HttpStatus.OK).json(hosp);
+      const { email, password} = req.body;
+      
+
+        hospitalModel.findOne({email})
+        .then((hosp, err) =>{
+          if (err) {
+             res.status(HttpStatus.BAD_REQUEST)
+              .json({
+                status: HttpStatus.BAD_REQUEST,
+                message: err,
+              });
+          }
+
+          if (!hosp) {
+            return res.status(HttpStatus.NOT_FOUND).json({
+              status: HttpStatus.NOT_FOUND,
+              message: 'Hospital Non Existent!',
+            });
+          }
+            if(!req.body.regNumber){
+              return res.status(HttpStatus.NOT_FOUND).json({
+                status: HttpStatus.NOT_FOUND,
+                message: 'Hospital Non Existent!',
+              });
             }
-        })
-        .catch(err => res.status(HttpStatus.BAD_REQUEST).json('Error:'`${err}`));
+              bcrypt.compare(password, hosp.password, (err, result) => {
+                if (err){
+                    return res.status(HttpStatus.BAD_REQUEST)
+                  .json({
+                    status: HttpStatus.BAD_REQUEST,
+                    message: err,
+                  });
+                }
+              if (result === true) {
+                const payload = { hosp };
+                const token = jwt.sign(payload, process.env.JWT_TOKEN, { expiresIn: EXPIRES });
+                newDoc.password = undefined;
+                return res.status(HttpStatus.OK).json({
+                  status: HttpStatus.OK,
+                  message: 'Hospital Authenticated!',
+                  hosp: hosp,
+                  token
+                });
+            }
+            return res.status(HttpStatus.NOT_ACCEPTIBLE).json({
+              status: HttpStatus.NOT_ACCEPTIBLE,
+              error: 'Password did not match!',
+            });
+        });
+      });
     },
     getAllHospitals: (req, res) =>{
         hospitalModel.find().populate('client').populate('doctors')
